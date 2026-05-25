@@ -114,9 +114,9 @@ const [loading, setLoading] = useState(true);
   <h2>Contact Developer</h2>
 
   <div className="contact-card" id="contact">
-    <p><strong>👨‍💻 Name:</strong> Vishal Bonde</p>
-    <p><strong>📧 Email:</strong> bondevishal27@gmail.com</p>
-    <p><strong>📱 Phone:</strong> +91 9021449829</p>
+    <p><strong>Name:</strong> Vishal Bonde</p>
+    <p><strong>Email:</strong> bondevishal27@gmail.com</p>
+    <p><strong>Phone:</strong> +91 9021449829</p>
     <div className="contact-card">
   <h3>Portfolio</h3>
   <p>
