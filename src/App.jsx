@@ -3,19 +3,25 @@ import API from "./api";
 import BookForm from "./components/BookForm";
 import BookList from "./components/BookList";
 import SearchFilter from "./components/SearchFilter";
+import SplashScreen from "./components/SplashScreen";
 import "./App.css";
 
 
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [search, setSearch] = useState("");
-  const [genre, setGenre] = useState("");
-  const [editingBook, setEditingBook] = useState(null);
+ const [books, setBooks] = useState([]);
+const [search, setSearch] = useState("");
+const [genre, setGenre] = useState("");
+const [editingBook, setEditingBook] = useState(null);
+const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchBooks();
-  }, []);
+ useEffect(() => {
+  fetchBooks();
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 3000);
+}, []);
 
   const fetchBooks = async () => {
     const res = await API.get("/");
@@ -42,7 +48,13 @@ function App() {
       (book.title.toLowerCase().includes(search.toLowerCase()) ||
         book.author.toLowerCase().includes(search.toLowerCase())) &&
       (genre === "" || book.genre === genre)
+
+      
   );
+
+  if (loading) {
+  return <SplashScreen />;
+}
 
   return (
     <div className="container">
