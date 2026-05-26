@@ -380,3 +380,25 @@ button:hover {
     font-size: 16px;
   }
 }
+.no-books {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #dbeafe;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+  margin-top: 20px;
+}
+
+.no-books h2 {
+  color: #ef4444;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.no-books p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+Bottom la takla ki override i

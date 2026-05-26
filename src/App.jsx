@@ -4,6 +4,7 @@ import BookForm from "./components/BookForm";
 import BookList from "./components/BookList";
 import SearchFilter from "./components/SearchFilter";
 import SplashScreen from "./components/SplashScreen";
+import { useRef } from "react";
 import "./App.css";
 
 
@@ -14,6 +15,7 @@ const [search, setSearch] = useState("");
 const [genre, setGenre] = useState("");
 const [editingBook, setEditingBook] = useState(null);
 const [loading, setLoading] = useState(true);
+const formRef = useRef(null);
 
  useEffect(() => {
   fetchBooks();
@@ -24,11 +26,26 @@ const [loading, setLoading] = useState(true);
 }, []);
 
   const fetchBooks = async () => {
+  try {
     const res = await API.get("/");
     setBooks(res.data);
-  };
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    alert("Failed to load books. Please try again.");
+  }
+};
+
+const handleEdit = (book) => {
+  setEditingBook(book);
+
+  formRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+};
 
   const addBook = async (book) => {
+  try {
     if (editingBook) {
       await API.put(`/${editingBook.id}`, book);
       setEditingBook(null);
@@ -36,12 +53,21 @@ const [loading, setLoading] = useState(true);
       await API.post("/", book);
     }
     fetchBooks();
-  };
+  } catch (error) {
+    console.error("Error saving book:", error);
+    alert("Failed to save book.");
+  }
+};
 
-  const deleteBook = async (id) => {
+ const deleteBook = async (id) => {
+  try {
     await API.delete(`/${id}`);
     fetchBooks();
-  };
+  } catch (error) {
+    console.error("Error deleting book:", error);
+    alert("Failed to delete book.");
+  }
+};
 
   const filteredBooks = books.filter(
     (book) =>
@@ -77,13 +103,15 @@ const [loading, setLoading] = useState(true);
     
     
     
-      <BookForm addBook={addBook} editingBook={editingBook} />
+     <div ref={formRef}>
+  <BookForm addBook={addBook} editingBook={editingBook} />
+</div>
 <p className="book-count">📚 Books Available</p>
-      <BookList
-        books={filteredBooks}
-        deleteBook={deleteBook}
-        setEditingBook={setEditingBook}
-      />
+     <BookList
+  books={filteredBooks}
+  deleteBook={deleteBook}
+  setEditingBook={handleEdit}
+/>
      <div className="about-section" id="about">
   <h2>📖 About BookVerse Library</h2>
 
